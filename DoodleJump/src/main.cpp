@@ -51,23 +51,39 @@ int main()
 
 
 		///move on y///
+		// dy positive means falling, negative going up
 		dy += 0.2f;
 		y += dy;
 
 		if (y > 500)
 			dy = -10.f;
 
+		///checkout if doodle is on platform////
+		for (int i = 0; i < 10; i++)
+		{
+			if (
+				(x + 50 > plat[i].x) && 
+				(x + 20 < plat[i].x + 68) &&
+				(y + 70 > plat[i].y) &&
+				(y + 70 < plat[i].y + 14) &&
+				(dy > 0))
+			{
+				dy = -10.f;
+			}
+		}
+
+
 
 		////draw////
 		sDoodle.setPosition(x, y);
 
 		app.draw(sBackground);
-		app.draw(sDoodle);
 		for (int i = 0; i < 10; i++)
 		{
 			sPlatform.setPosition(plat[i].x, plat[i].y);
 			app.draw(sPlatform);
 		}
+		app.draw(sDoodle);
 		app.display();
 	}
 

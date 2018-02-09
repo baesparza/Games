@@ -32,7 +32,7 @@ int main()
 	}
 
 	int x = 100, y = 100, h = 200;
-	float dx = 0.0f, dy = 0.0f;
+	float dx = 0.f, dy = 0.f;
 
 	while (app.isOpen())
 	{
@@ -43,12 +43,22 @@ int main()
 				app.close();
 		}
 
+		/////keyboard input///
+		if (Keyboard::isKeyPressed(Keyboard::Right))
+			x += 3;
+		else if (Keyboard::isKeyPressed(Keyboard::Left))
+			x -= 3;
+
+
+		///move on y///
 		dy += 0.2f;
 		y += dy;
 
 		if (y > 500)
-			dy = -10;
+			dy = -10.f;
 
+
+		////draw////
 		sDoodle.setPosition(x, y);
 
 		app.draw(sBackground);

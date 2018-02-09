@@ -31,24 +31,34 @@ int main()
 		plat[i].y = rand() % 533;
 	}
 
+	int x = 100, y = 100, h = 200;
+	float dx = 0.0f, dy = 0.0f;
+
 	while (app.isOpen())
 	{
 		Event e;
 		while (app.pollEvent(e))
 		{
 			if (e.type == Event::Closed)
-			{
 				app.close();
-			}
-			app.draw(sBackground);
-			app.draw(sDoodle);
-			for (int i = 0; i < 10; i++)
-			{
-				sPlatform.setPosition(plat[i].x, plat[i].y);
-				app.draw(sPlatform);
-			}
-			app.display();
 		}
+
+		dy += 0.2f;
+		y += dy;
+
+		if (y > 500)
+			dy = -10;
+
+		sDoodle.setPosition(x, y);
+
+		app.draw(sBackground);
+		app.draw(sDoodle);
+		for (int i = 0; i < 10; i++)
+		{
+			sPlatform.setPosition(plat[i].x, plat[i].y);
+			app.draw(sPlatform);
+		}
+		app.display();
 	}
 
 	return 0;

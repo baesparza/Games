@@ -23,9 +23,11 @@ int main()
 
 	Sprite sBackground(t1), sPlatform(t2), sDoodle(t3);
 
-	point plat[20];
+	const unsigned int number_platforms = 5;
 
-	for (int i = 0; i < 10; i++)
+	point plat[number_platforms];
+
+	for (int i = 0; i < number_platforms; i++)
 	{
 		plat[i].x = rand() % 400;
 		plat[i].y = rand() % 533;
@@ -59,7 +61,7 @@ int main()
 			dy = -10.f;
 
 		///checkout if doodle is on platform////
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < number_platforms; i++)
 		{
 			if (
 				(x + 50 > plat[i].x) && 
@@ -75,7 +77,7 @@ int main()
 		////move platforms///
 		if (y < h)
 		{
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < number_platforms; i++)
 			{
 				y = h;
 				plat[i].y = plat[i].y - dy;
@@ -92,7 +94,7 @@ int main()
 		sDoodle.setPosition(x, y);
 
 		app.draw(sBackground);
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < number_platforms; i++)
 		{
 			sPlatform.setPosition(plat[i].x, plat[i].y);
 			app.draw(sPlatform);

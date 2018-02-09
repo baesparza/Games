@@ -72,6 +72,20 @@ int main()
 			}
 		}
 
+		////move platforms///
+		if (y < h)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				y = h;
+				plat[i].y = plat[i].y - dy;
+				if (plat[i].y > 533) // goes of window
+				{
+					plat[i].y = 0; // move it to the top
+					plat[i].x = rand() % 400; // reset x position
+				}
+			}
+		}
 
 
 		////draw////

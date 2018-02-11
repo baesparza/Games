@@ -1,29 +1,61 @@
 #include <SFML/Graphics.hpp>
+#include <time.h>
+
+using namespace sf;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600),
-		"Hello SFML", sf::Style::Default);
+	RenderWindow app(VideoMode(520, 450), "Arkanoid Game!");
 
-	sf::Font font;
-	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	app.setFramerateLimit(60);
 
-	sf::Text text;
-	text.setFont(font);
-	text.setPosition(200, 200);
-	text.setString("Hello SFML");
+	Texture t1, t2, t3, t4;
+	t1.loadFromFile("./assets/images/block01.png");
+	t2.loadFromFile("./assets/images/background.jpg");
+	t3.loadFromFile("./assets/images/ball.png");
+	t4.loadFromFile("./assets/images/paddle.png");
 
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
+	Sprite sBackground(t2), sBall(t3), sPaddle(t4);
+
+	sPaddle.setPosition(300, 440);
+	sBall.setPosition(300, 300);
+
+	Sprite blocks[100];
+
+	int n = 0;
+	//set blocks to be destroyed//
+	for (int i = 1; i <= 10; i++)
+		for (int j = 1; j <= 10; j++)
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+			blocks[n].setTexture(t1);
+			blocks[n].setPosition(i * 43, j * 20);
+			n++;
 		}
-		window.clear();
-		window.draw(text);
-		window.display();
+
+	while (app.isOpen())
+	{
+		Event e;
+		while (app.pollEvent(e))
+		{
+			if (e.type == Event::Closed)
+			{
+				app.close();
+			}
+		}
+
+
+
+		////draw////
+		app.clear();
+		app.draw(sBackground);
+		app.draw(sBall);
+		app.draw(sPaddle);
+		for (auto b: blocks) // draw blocks
+			app.draw(b);
+		
+
+		app.display();
+
 	}
 
 	return 0;

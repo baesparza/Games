@@ -3,8 +3,15 @@
 
 using namespace sf;
 
+bool isCollide(const Sprite &s1, const Sprite &s2) 
+{
+	return s1.getGlobalBounds().intersects(s2.getGlobalBounds());
+}
+
 int main()
 {
+	srand(time(0));
+
 	RenderWindow app(VideoMode(520, 450), "Arkanoid Game!");
 
 	app.setFramerateLimit(60);
@@ -46,8 +53,23 @@ int main()
 		}
 
 
-		//ball movement//
-		sBall.move(dx, dy);
+		//////move and colitions(ball)////////
+		sBall.move(dx, 0);
+		for (int i = 0; i < n; i++)
+			if (isCollide(sBall, blocks[i]))
+			{
+				blocks[i].setPosition(-100, 0);
+				dx = -dx;
+			}
+
+		sBall.move(0, dy);
+		for (int i = 0; i < n; i++)
+			if (isCollide(sBall, blocks[i]))
+			{
+				blocks[i].setPosition(-100, 0);
+				dy = -dy;
+			}
+
 		Vector2f b = sBall.getPosition();
 		if (b.x < 0 || b.x > 520) dx = -dx;
 		if (b.y < 0 || b.y > 450) dy = -dy;

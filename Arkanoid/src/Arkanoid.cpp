@@ -74,6 +74,14 @@ int main()
 		if (b.x < 0 || b.x > 520) dx = -dx;
 		if (b.y < 0 || b.y > 450) dy = -dy;
 
+		//////move platform///////
+		if (Keyboard::isKeyPressed(Keyboard::Right)) sPaddle.move(6, 0);
+		if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6, 0);
+
+		if (isCollide(sPaddle, sBall))
+			dy = -(rand() % 5 + 2);
+
+
 		////draw////
 		app.clear();
 		app.draw(sBackground);

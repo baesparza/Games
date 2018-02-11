@@ -3,6 +3,7 @@
 
 using namespace sf;
 
+// veryfy fi to sprite are coliding
 bool isCollide(const Sprite &s1, const Sprite &s2) 
 {
 	return s1.getGlobalBounds().intersects(s2.getGlobalBounds());
@@ -29,7 +30,7 @@ int main()
 
 	Sprite blocks[100];
 
-	int n = 0;
+	int n = 0; // number of blocks
 	//set blocks to be destroyed//
 	for (int i = 1; i <= 10; i++)
 		for (int j = 1; j <= 10; j++)
@@ -54,14 +55,16 @@ int main()
 
 
 		//////move and colitions(ball)////////
+		// verify colition whit left or right side of block
 		sBall.move(dx, 0);
 		for (int i = 0; i < n; i++)
 			if (isCollide(sBall, blocks[i]))
 			{
-				blocks[i].setPosition(-100, 0);
-				dx = -dx;
+				blocks[i].setPosition(-100, 0); // move block from visible screen, not from memory
+				dx = -dx; // change direction
 			}
 
+		// verify colition with top or bottom of block
 		sBall.move(0, dy);
 		for (int i = 0; i < n; i++)
 			if (isCollide(sBall, blocks[i]))
@@ -71,6 +74,7 @@ int main()
 			}
 
 		Vector2f b = sBall.getPosition();
+		// change direction of vector
 		if (b.x < 0 || b.x > 520) dx = -dx;
 		if (b.y < 0 || b.y > 450) dy = -dy;
 
@@ -79,7 +83,7 @@ int main()
 		if (Keyboard::isKeyPressed(Keyboard::Left)) sPaddle.move(-6, 0);
 
 		if (isCollide(sPaddle, sBall))
-			dy = -(rand() % 5 + 2);
+			dy = -(rand() % 5 + 2); // negative due to origin is top left
 
 
 		////draw////

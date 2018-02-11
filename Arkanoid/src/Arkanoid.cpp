@@ -32,6 +32,8 @@ int main()
 			n++;
 		}
 
+	float dx = 6.f, dy = 5.f;
+
 	while (app.isOpen())
 	{
 		Event e;
@@ -44,15 +46,20 @@ int main()
 		}
 
 
+		//ball movement//
+		sBall.move(dx, dy);
+		Vector2f b = sBall.getPosition();
+		if (b.x < 0 || b.x > 520) dx = -dx;
+		if (b.y < 0 || b.y > 450) dy = -dy;
 
 		////draw////
 		app.clear();
 		app.draw(sBackground);
 		app.draw(sBall);
 		app.draw(sPaddle);
-		for (auto b: blocks) // draw blocks
-			app.draw(b);
-		
+		for (auto block : blocks) // draw blocks
+			app.draw(block);
+
 
 		app.display();
 

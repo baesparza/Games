@@ -56,6 +56,12 @@ int main()
 				app.close();
 		}
 
+		// control movement(keyboard input)
+		if (Keyboard::isKeyPressed(Keyboard::Up) &&  dir != 0) dir = 3;
+		else if (Keyboard::isKeyPressed(Keyboard::Down) && dir != 3) dir = 0;
+		else if (Keyboard::isKeyPressed(Keyboard::Right) && dir != 1) dir = 2;
+		else if (Keyboard::isKeyPressed(Keyboard::Left) && dir != 2) dir = 1;
+
 		// control speed of movement
 		if (timer > delay)
 		{

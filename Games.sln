@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DoodleJump", "DoodleJump\Do
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arkanoid", "Arkanoid\Arkanoid.vcxproj", "{4BF66570-9A35-4EC1-9F4C-CD50686F5747}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Snake", "Snake\Snake.vcxproj", "{BEB50718-64B6-4478-A622-FD238316E752}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,6 +29,10 @@ Global
 		{4BF66570-9A35-4EC1-9F4C-CD50686F5747}.Debug|x64.Build.0 = Debug|x64
 		{4BF66570-9A35-4EC1-9F4C-CD50686F5747}.Release|x64.ActiveCfg = Release|x64
 		{4BF66570-9A35-4EC1-9F4C-CD50686F5747}.Release|x64.Build.0 = Release|x64
+		{BEB50718-64B6-4478-A622-FD238316E752}.Debug|x64.ActiveCfg = Debug|x64
+		{BEB50718-64B6-4478-A622-FD238316E752}.Debug|x64.Build.0 = Debug|x64
+		{BEB50718-64B6-4478-A622-FD238316E752}.Release|x64.ActiveCfg = Release|x64
+		{BEB50718-64B6-4478-A622-FD238316E752}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,6 +27,7 @@ void Tick()
 		s[i].x = s[i - 1].x;
 		s[i].y = s[i - 1].y;
 	}
+
 	if (dir == 0) s[0].y += 1;
 	else if (dir == 1) s[0].x -= 1;
 	else if (dir == 2) s[0].x += 1;
@@ -40,6 +41,16 @@ void Tick()
 		f.y = rand() % M;
 	}
 
+	// verify limit (teleport)
+	//if (s[0].x > N) s[0].x = 0;
+	if (s[0].x < 0) s[0].x = N;
+	//if (s[0].y > M) s[0].y = 0;
+	if (s[0].y < 0) s[0].y = M;
+
+	// verify self eating
+	for (int i = 1; i < num; i++)
+		if ((s[0].x == s[i].x) && (s[0].y == s[i].y))
+			num = i;
 }
 
 

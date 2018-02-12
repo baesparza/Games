@@ -3,7 +3,7 @@
 
 using namespace sf;
 
-unsigned const int 
+unsigned const int
 N = 30, M = 20, // number of colums, rows
 size = 16, // size of each square
 Width = size * N, Height = size * M; // size of window
@@ -15,7 +15,12 @@ struct Snake
 	int x, y;
 } s[100]; // all component of a snake
 
-void Tick() 
+struct fruit
+{
+	int x, y;
+}f;
+
+void Tick()
 {
 	for (int i = num; i > 0; i--) // copy last position of snake part
 	{
@@ -26,21 +31,36 @@ void Tick()
 	else if (dir == 1) s[0].x -= 1;
 	else if (dir == 2) s[0].x += 1;
 	else if (dir == 3) s[0].y -= 1;
+
+	// verify if eating
+	if ((f.x == s[0].x) && (f.y == s[0].y))
+	{
+		num++;
+		f.x = rand() % N;
+		f.y = rand() % M;
+	}
+
 }
 
 
 int main()
 {
+	srand(time(0));
+
 	RenderWindow app(VideoMode(Width, Height), "Snake Game!");
 
-	Texture t1, t2;
+	Texture t1, t2, t3;
 	t1.loadFromFile("./assets/images/white.png");
 	t2.loadFromFile("./assets/images/red.png");
+	t3.loadFromFile("./assets/images/green.png");
 
-	Sprite sprite1(t1), sprite2(t2);
+	Sprite sprite1(t1), sprite2(t2), sprite3(t3);
 
 	Clock clock;
 	float timer = 0.f, delay = 0.1f;
+
+	// initialize fruit
+	f.x = f.y = 10;
 
 	while (app.isOpen())
 	{
@@ -86,6 +106,10 @@ int main()
 			sprite2.setPosition(s[i].x * size, s[i].y * size);
 			app.draw(sprite2);
 		}
+
+		// draw fuit
+		sprite3.setPosition(f.x*size, f.y*size);
+		app.draw(sprite3);
 
 		app.display();
 	}

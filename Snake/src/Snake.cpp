@@ -22,7 +22,7 @@ struct fruit
 
 void Tick()
 {
-	for (int i = num; i > 0; i--) // copy last position of snake part
+	for (int i = num; i > 0; --i) // copy last position of snake part
 	{
 		s[i].x = s[i - 1].x;
 		s[i].y = s[i - 1].y;
@@ -42,10 +42,10 @@ void Tick()
 	}
 
 	// verify limit (teleport)
-	//if (s[0].x > N) s[0].x = 0;
 	if (s[0].x < 0) s[0].x = N;
-	//if (s[0].y > M) s[0].y = 0;
+	if (s[0].x > N) s[0].x = 0;
 	if (s[0].y < 0) s[0].y = M;
+	if (s[0].y > M) s[0].y = 0;
 
 	// verify self eating
 	for (int i = 1; i < num; i++)

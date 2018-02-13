@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tetris", "Tetris\Tetris.vcxproj", "{6EE60C61-ACD8-4C07-8830-A9998FDDF0DC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_Tetris", "01_Tetris\01_Tetris.vcxproj", "{6EE60C61-ACD8-4C07-8830-A9998FDDF0DC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DoodleJump", "DoodleJump\DoodleJump.vcxproj", "{CDA57A22-B720-4FF0-AE15-919A1D3AD85C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_DoodleJump", "02_DoodleJump\02_DoodleJump.vcxproj", "{CDA57A22-B720-4FF0-AE15-919A1D3AD85C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arkanoid", "Arkanoid\Arkanoid.vcxproj", "{4BF66570-9A35-4EC1-9F4C-CD50686F5747}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_Arkanoid", "03_Arkanoid\03_Arkanoid.vcxproj", "{4BF66570-9A35-4EC1-9F4C-CD50686F5747}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Snake", "Snake\Snake.vcxproj", "{BEB50718-64B6-4478-A622-FD238316E752}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Snake", "04_Snake\04_Snake.vcxproj", "{BEB50718-64B6-4478-A622-FD238316E752}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

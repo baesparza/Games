@@ -1,29 +1,48 @@
 #include <SFML/Graphics.hpp>
+#include <time.h>
+
+using namespace sf;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600),
-		"Hello SFML", sf::Style::Default);
+	RenderWindow app(VideoMode(320, 320), "MinesWeeper");
 
-	sf::Font font;
-	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	int w = 32;
+	int grid[10][10], // 12 is used for offset
+		sgrid[10][10]; // for showing
 
-	sf::Text text;
-	text.setFont(font);
-	text.setPosition(200, 200);
-	text.setString("Bruno Esparza");
+	Texture t;
+	t.loadFromFile("./assets/images/tiles.jpg");
 
-	while (window.isOpen())
+	Sprite s(t);
+
+
+	// fill grid with boid squares
+	for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++)
+			sgrid[i][j] = 10;
+
+
+	while (app.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		Event e;
+		while (app.pollEvent(e))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+			if (e.type == Event::Closed)
+				app.close();
 		}
-		window.clear();
-		window.draw(text);
-		window.display();
+
+		app.clear(Color::White);
+
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
+			{
+				s.setTextureRect(IntRect(sgrid[i][j] * w, 0, w, w));
+				s.setPosition(i * w, j * w);
+				app.draw(s);
+			}
+		app.display();
 	}
 
+	return 0;
 }

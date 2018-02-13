@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_Arkanoid", "03_Arkanoid\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Snake", "04_Snake\04_Snake.vcxproj", "{BEB50718-64B6-4478-A622-FD238316E752}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_Minesweeper", "05_Minesweeper\05_Minesweeper.vcxproj", "{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,10 @@ Global
 		{BEB50718-64B6-4478-A622-FD238316E752}.Debug|x64.Build.0 = Debug|x64
 		{BEB50718-64B6-4478-A622-FD238316E752}.Release|x64.ActiveCfg = Release|x64
 		{BEB50718-64B6-4478-A622-FD238316E752}.Release|x64.Build.0 = Release|x64
+		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Debug|x64.ActiveCfg = Debug|x64
+		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Debug|x64.Build.0 = Debug|x64
+		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Release|x64.ActiveCfg = Release|x64
+		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Snake", "04_Snake\04_Sna
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_Minesweeper", "05_Minesweeper\05_Minesweeper.vcxproj", "{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_15Puzzle", "06_15Puzzle\06_15Puzzle.vcxproj", "{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,6 +41,10 @@ Global
 		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Debug|x64.Build.0 = Debug|x64
 		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Release|x64.ActiveCfg = Release|x64
 		{C62A1B03-AD84-40C9-95CA-253B7C6E0D6E}.Release|x64.Build.0 = Release|x64
+		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Debug|x64.ActiveCfg = Debug|x64
+		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Debug|x64.Build.0 = Debug|x64
+		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Release|x64.ActiveCfg = Release|x64
+		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

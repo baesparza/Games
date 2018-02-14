@@ -6,7 +6,7 @@ using namespace sf;
 // options
 unsigned const int w = 32; // size of each square
 unsigned const int rows = 10, cols = 10;
-unsigned const int number_bombs = 10;
+unsigned const int number_bombs = 30;
 int grid[rows][cols],
 sgrid[rows][cols]; // for showing
 
@@ -24,10 +24,34 @@ void fill_bombs()
 	}
 }
 
-int update_bombs(int i, int j)
+void update_bombs()
 {
-	int n = 0;
-	return n;
+	// clone array of bombs
+	int temp[rows + 2][cols + 2];
+
+	// clone values to temporal array
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
+			temp[i + 1][j + 1] = grid[i][j];
+
+	// know num of mines touching each square in the temp array
+	for (int i = 1; i <= rows; i++)
+		for (int j = 1; j <= cols; j++)
+		{
+			if (temp[i][j] == 9) continue;
+
+			int n = 0;
+			if (temp[i - 1][j - 1] == 9) n++; // top left
+			if (temp[i - 1][j] == 9) n++; // top center
+			if (temp[i - 1][j + 1] == 9) n++; // top right
+			if (temp[i][j + 1] == 9) n++; // right center
+			if (temp[i + 1][j + 1] == 9) n++; // bottom right
+			if (temp[i + 1][j] == 9) n++; // bottom center
+			if (temp[i + 1][j - 1] == 9) n++; // bottom left
+			if (temp[i][j - 1] == 9) n++; // left center
+
+			grid[i - 1][j - 1] = n; // update main grid
+		}
 }
 
 int main()
@@ -46,19 +70,9 @@ int main()
 		for (int j = 0; j < cols; j++)
 			sgrid[i][j] = 10;
 
-	// fill with bombs
+	// fill with bombs and update near squares
 	fill_bombs();
-
-	// know num of mines touching each square
-	for (int i = 0; i < rows; i++)
-		for (int j = 0; j < cols; j++)
-		{
-			if (grid[i][j] == 9) continue;
-
-			// counter for mines
-			grid[i][j] = update_bombs(i, j);
-		}
-
+	update_bombs();
 
 
 	while (app.isOpen())
@@ -80,17 +94,18 @@ int main()
 				else if (e.key.code == Mouse::Right)
 					sgrid[x][y] = 11;
 			}
-
-
 		}
 
+
+		/////draw//////
 		app.clear(Color::White);
 
 		for (int i = 0; i < rows; i++)
 			for (int j = 0; j < cols; j++)
 			{
-				if (sgrid[x][y] == 9) // show all grid / lose
-					sgrid[i][j] = grid[i][j];
+				if (x > 0 && x < w*rows && y > 0 && y < w*cols) // inside the window
+					if (sgrid[x][y] == 9) // show all grid / lose
+						sgrid[i][j] = grid[i][j];
 				s.setTextureRect(IntRect(sgrid[i][j] * w, 0, w, w));
 				s.setPosition(i * w, j * w);
 				app.draw(s);

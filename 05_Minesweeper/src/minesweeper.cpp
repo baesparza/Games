@@ -3,48 +3,60 @@
 
 using namespace sf;
 
+// options
+unsigned const int w = 32; // size of each square
+unsigned const int rows = 10, cols = 10;
+unsigned const int number_bombs = 10;
+int grid[rows][cols],
+sgrid[rows][cols]; // for showing
+
+
+void fill_bombs()
+{
+	for (int n = 0; n < number_bombs; n++)
+	{
+		int i = rand() % rows;
+		int j = rand() % cols;
+		if (grid[i][j] == 9)
+			n--; // already has a bomb -> pass
+		else
+			grid[i][j] = 9;
+	}
+}
+
+int update_bombs(int i, int j)
+{
+	int n = 0;
+	return n;
+}
 
 int main()
 {
 	srand(time(0));
 
-	RenderWindow app(VideoMode(400, 400), "MinesWeeper");
+	RenderWindow app(VideoMode(rows * w, cols * w), "MinesWeeper");
 
 	Texture t;
 	t.loadFromFile("./assets/images/tiles.jpg");
 
 	Sprite s(t);
 
-	unsigned const int w = 32; // size of each square
-	int grid[12][12],
-		sgrid[12][12]; // for showing
-
-		// fill grid with boid squares
-	for (int i = 1; i <= 10; i++)
-		for (int j = 1; j <= 10; j++)
-		{
+	// fill grid with boid squares
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
 			sgrid[i][j] = 10;
-			grid[i][j] = (rand() % 5 == 0) ? 9 : 0; // fill with mines or safe
-		}
+
+	// fill with bombs
+	fill_bombs();
 
 	// know num of mines touching each square
-	for (int i = 1; i <= 10; i++)
-		for (int j = 1; j <= 10; j++)
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
 		{
 			if (grid[i][j] == 9) continue;
 
 			// counter for mines
-			int n = 0;
-			if (grid[i - 1][j - 1] == 9) n++; // top left
-			if (grid[i - 1][j] == 9) n++; // top center
-			if (grid[i - 1][j + 1] == 9) n++; // top right
-			if (grid[i][j + 1] == 9) n++; // right center
-			if (grid[i + 1][j + 1] == 9) n++; // bottom right
-			if (grid[i + 1][j] == 9) n++; // bottom center
-			if (grid[i + 1][j - 1] == 9) n++; // bottom left
-			if (grid[i][j - 1] == 9) n++; // left center
-
-			grid[i][j] = n;
+			grid[i][j] = update_bombs(i, j);
 		}
 
 
@@ -74,8 +86,8 @@ int main()
 
 		app.clear(Color::White);
 
-		for (int i = 1; i <= 10; i++)
-			for (int j = 1; j <= 10; j++)
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < cols; j++)
 			{
 				if (sgrid[x][y] == 9) // show all grid / lose
 					sgrid[i][j] = grid[i][j];

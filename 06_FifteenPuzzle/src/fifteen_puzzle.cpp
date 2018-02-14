@@ -55,6 +55,17 @@ int main()
 					int n = grid[x][y];
 					grid[x][y] = 16;
 					grid[x + dx][y + dy] = n;
+
+					// animation
+					sprite[16].move(-dx*w, -dy*w);
+					float speed = 3;
+					for (int i = 0; i < w; i += speed)
+					{
+						sprite[n].move(speed*dx, speed*dy);
+						app.draw(sprite[16]);
+						app.draw(sprite[n]);
+						app.display();
+					}
 				}
 		}
 

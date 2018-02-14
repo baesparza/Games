@@ -4,7 +4,7 @@
 using namespace sf;
 
 unsigned const int
-N = 30, M = 20, // number of colums, rows
+N = 30, M = 30, // number of colums, rows
 size = 16, // size of each square
 Width = size * N, Height = size * M; // size of window
 
@@ -42,10 +42,10 @@ void Tick()
 	}
 
 	// verify limit (teleport)
-	if (s[0].x < 0) s[0].x = N;
-	if (s[0].x > N) s[0].x = 0;
-	if (s[0].y < 0) s[0].y = M;
-	if (s[0].y > M) s[0].y = 0;
+	if (s[0].x < 0) s[0].x = N -1;
+	if (s[0].x > N - 1) s[0].x = 0;
+	if (s[0].y < 0) s[0].y = M - 1;
+	if (s[0].y > M - 1) s[0].y = 0;
 
 	// verify self eating
 	for (int i = 1; i < num; i++)

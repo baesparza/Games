@@ -3,6 +3,10 @@
 
 using namespace sf;
 
+	
+const unsigned int number_platforms = 10;
+
+
 struct point
 {
 	int x, y;
@@ -23,7 +27,6 @@ int main()
 
 	Sprite sBackground(t1), sPlatform(t2), sDoodle(t3);
 
-	const unsigned int number_platforms = 5;
 
 	point plat[number_platforms];
 
@@ -47,9 +50,9 @@ int main()
 
 		/////keyboard input///
 		if (Keyboard::isKeyPressed(Keyboard::Right))
-			x += 3;
+			x += 4;
 		else if (Keyboard::isKeyPressed(Keyboard::Left))
-			x -= 3;
+			x -= 4;
 
 
 		///move on y///
@@ -91,6 +94,11 @@ int main()
 
 
 		////draw////
+		// check if x gets of screen
+		if (x > 500)
+			x = -70;
+		else if (x < -70)
+			x = 500;
 		sDoodle.setPosition(x, y);
 
 		app.draw(sBackground);

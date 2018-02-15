@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_Minesweeper", "05_Minesw
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06_FifteenPuzzle", "06_FifteenPuzzle\06_FifteenPuzzle.vcxproj", "{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07_Racing", "07_Racing\07_Racing.vcxproj", "{5B16B8FF-508C-4EC5-9F9B-9EA43E0DDC4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -45,6 +47,10 @@ Global
 		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Debug|x64.Build.0 = Debug|x64
 		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Release|x64.ActiveCfg = Release|x64
 		{DF87C21F-97FD-418D-93F2-1C3AFF32DC14}.Release|x64.Build.0 = Release|x64
+		{5B16B8FF-508C-4EC5-9F9B-9EA43E0DDC4E}.Debug|x64.ActiveCfg = Debug|x64
+		{5B16B8FF-508C-4EC5-9F9B-9EA43E0DDC4E}.Debug|x64.Build.0 = Debug|x64
+		{5B16B8FF-508C-4EC5-9F9B-9EA43E0DDC4E}.Release|x64.ActiveCfg = Release|x64
+		{5B16B8FF-508C-4EC5-9F9B-9EA43E0DDC4E}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

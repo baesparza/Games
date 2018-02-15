@@ -56,7 +56,7 @@ int main()
 
 	Clock clock; // clock, keep track of time
 
-				 /////keep program working/////
+	/////keep program working/////
 	while (window.isOpen())
 	{
 		// variables to control the speed of game

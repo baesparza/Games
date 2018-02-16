@@ -2,6 +2,22 @@
 
 using namespace sf;
 
+struct Car
+{
+	float x, y, speed, angle;
+
+	Car() : speed(2), angle(0)
+	{
+	}
+
+	void move()
+	{
+		x += sin(angle) * speed;
+		y -= cos(angle) * speed;
+		angle += 0.08f;
+	}
+};
+
 int main()
 {
 	RenderWindow app(VideoMode(640, 480), "Racing");
@@ -15,6 +31,16 @@ int main()
 
 	sCar.setPosition(300, 300);
 	sCar.setOrigin(22, 22);
+
+	const unsigned int N = 5;
+	Car cars[N];
+	for (int i = 0; i < N; i++)
+	{
+		cars[i].x = 300 + i * 50;
+		cars[i].y = 1700 + i * 80;
+		cars[i].speed = 7 + i;
+	}
+
 
 	float x = 300.f, y = 300.f;
 	float speed = 0.f, angle = 0.f;
@@ -55,27 +81,35 @@ int main()
 			else
 				speed = 0;
 		}
-		if (Right && speed != 0) 
+		if (Right && speed != 0)
 			angle += turnSpeed * speed / maxSpeed;
-		if (Left && speed != 0) 
+		if (Left && speed != 0)
 			angle -= turnSpeed * speed / maxSpeed;
 
-		x += sin(angle) * speed;
-		y -= cos(angle) * speed;
 
-		if (x > 320) offsetX = x - 320;
-		if (y > 240) offsetY = y - 240;
+		cars[0].speed = speed;
+		cars[0].angle = angle;
+
+
+		for (int i = 0; i < N; i++) cars[i].move();
+
+		if (cars[0].x > 320) offsetX = cars[0].x - 320;
+		if (cars[0].y > 240) offsetY = cars[0].y - 240;
 
 		/////draw/////
 		app.clear(Color::White);
 		sBackground.setPosition(-offsetX, -offsetY);
 		app.draw(sBackground);
 
+		Color colors[5] = {Color::Red, Color::Green, Color::Magenta, Color::Blue, Color::White};
 
-		sCar.setPosition(x - offsetX, y - offsetY);
-		sCar.setRotation(angle * 180 / 3.141592);
-		sCar.setColor(Color::Red);
-		app.draw(sCar);
+		for (int i = 0; i < N; i++)
+		{
+			sCar.setPosition(cars[i].x - offsetX, cars[i].y - offsetY);
+			sCar.setRotation(cars[i].angle * 180 / 3.141592);
+			sCar.setColor(colors[i]);
+			app.draw(sCar);
+		}
 
 		app.display();
 	}

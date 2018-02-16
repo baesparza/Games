@@ -37,7 +37,7 @@ int main()
 	for (int i = 0; i < N; i++)
 	{
 		cars[i].x = 300 + i * 50;
-		cars[i].y = 1700 + i * 80;
+		cars[i].y = 300 + i * 80;
 		cars[i].speed = 7 + i;
 	}
 
@@ -92,6 +92,23 @@ int main()
 
 
 		for (int i = 0; i < N; i++) cars[i].move();
+
+		float R = 22;
+		// colision
+		for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++)
+			{
+				int dx = cars[i].x - cars[j].x;
+				int dy = cars[i].y - cars[j].y;
+				if (dx*dx + dy*dy < 4 * R*R)
+				{
+					cars[i].x += dx / 10;
+					cars[i].y += dy / 10;
+					cars[j].x -= dx / 10;
+					cars[j].y -= dy / 10;
+				}
+			}
+
 
 		if (cars[0].x > 320) offsetX = cars[0].x - 320;
 		if (cars[0].y > 240) offsetY = cars[0].y - 240;

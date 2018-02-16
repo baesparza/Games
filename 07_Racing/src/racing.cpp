@@ -1,29 +1,39 @@
 #include <SFML/Graphics.hpp>
+ 
+using namespace sf;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600),
-		"Hello SFML", sf::Style::Default);
+	RenderWindow app(VideoMode(640,480), "Racing");
+	app.setFramerateLimit(60);
 
-	sf::Font font;
-	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	Texture t1, t2;
+	t1.loadFromFile("./assets/images/background.png");
+	t2.loadFromFile("./assets/images/car.png");
 
-	sf::Text text;
-	text.setFont(font);
-	text.setPosition(200, 200);
-	text.setString("Bruno Esparza");
+	Sprite sBackground(t1), sCar(t2);
 
-	while (window.isOpen())
+	sCar.setPosition(300,300);
+
+
+	while (app.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		Event e;
+		while (app.pollEvent(e))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+			if (e.type == Event::Closed)
+				app.close();
 		}
-		window.clear();
-		window.draw(text);
-		window.display();
+
+		/////draw/////
+		app.clear(Color::White);
+		app.draw(sBackground);
+
+		sCar.setColor(Color::Red);
+		app.draw(sCar);
+
+		app.display();
 	}
+
 	return 0;
 }

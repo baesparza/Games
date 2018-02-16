@@ -2,54 +2,78 @@
 
 using namespace sf;
 
+const int num = 8; //checkpoints
+int points[num][2] =
+{
+	300, 610,
+	1270,430,
+	1380,2380,
+	1900,2460,
+	1970,1700,
+	2550,1680,
+	2560,3150,
+	500, 3300
+};
+
 struct Car
 {
-	float x, y, speed, angle;
+	float x, y, speed, angle; int n;
 
-	Car() : speed(2), angle(0)
-	{
-	}
+	Car() :speed(2), angle(0), n(0)
+	{}
 
 	void move()
 	{
 		x += sin(angle) * speed;
 		y -= cos(angle) * speed;
-		angle += 0.08f;
+	}
+
+	void findTarget()
+	{
+		float tx = points[n][0];
+		float ty = points[n][1];
+		float beta = angle - atan2(tx - x, -ty + y);
+
+		angle += (sin(beta) < 0) ? 0.005 * speed : -0.005 * speed;
+
+		if ((x - tx)*(x - tx) + (y - ty)*(y - ty) < 25 * 25)
+			n = (n + 1) % num;
 	}
 };
 
+
 int main()
 {
-	RenderWindow app(VideoMode(640, 480), "Racing");
+	RenderWindow app(VideoMode(640, 480), "Car Racing Game!");
 	app.setFramerateLimit(60);
 
-	Texture t1, t2;
-	t1.loadFromFile("./assets/images/background.png");
-	t2.loadFromFile("./assets/images/car.png");
+	Texture t1, t2, t3;
+	t1.loadFromFile("assets/images/background.png");
+	t2.loadFromFile("assets/images/car.png");
+	t1.setSmooth(true);
+	t2.setSmooth(true);
 
 	Sprite sBackground(t1), sCar(t2);
+	sBackground.scale(2, 2);
 
-	sCar.setPosition(300, 300);
 	sCar.setOrigin(22, 22);
+	float R = 22;
 
-	const unsigned int N = 5;
-	Car cars[N];
+	const int N = 5; // number of cars
+	Car car[N];
 	for (int i = 0; i < N; i++)
 	{
-		cars[i].x = 300 + i * 50;
-		cars[i].y = 300 + i * 80;
-		cars[i].speed = 7 + i;
+		car[i].x = 300 + i * 50;
+		car[i].y = 1700 + i * 80;
+		car[i].speed = 7 + i;
 	}
 
-
-	float x = 300.f, y = 300.f;
 	float speed = 0.f, angle = 0.f;
 	float maxSpeed = 12.f;
 	float acc = 0.2f, dec = 0.3f;
 	float turnSpeed = 0.08f;
 
 	int offsetX = 0, offsetY = 0;
-
 
 	while (app.isOpen())
 	{
@@ -66,64 +90,69 @@ int main()
 		if (Keyboard::isKeyPressed(Keyboard::Down)) Down = 1;
 		if (Keyboard::isKeyPressed(Keyboard::Left)) Left = 1;
 
-
-		//car movement//
+		//car movement
 		if (Up && speed < maxSpeed)
 			speed += (speed < 0) ? dec : acc;
+
 		if (Down && speed > -maxSpeed)
 			speed -= (speed > 0) ? dec : acc;
+
 		if (!Up && !Down)
-		{
 			if (speed - dec > 0)
 				speed -= dec;
 			else if (speed + dec < 0)
 				speed += dec;
 			else
 				speed = 0;
-		}
+
 		if (Right && speed != 0)
 			angle += turnSpeed * speed / maxSpeed;
 		if (Left && speed != 0)
 			angle -= turnSpeed * speed / maxSpeed;
 
+		car[0].speed = speed;
+		car[0].angle = angle;
 
-		cars[0].speed = speed;
-		cars[0].angle = angle;
+		for (int i = 0; i < N; i++)
+			car[i].move();
+		for (int i = 1; i < N; i++)
+			car[i].findTarget();
 
-
-		for (int i = 0; i < N; i++) cars[i].move();
-
-		float R = 22;
-		// colision
+		//collision
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++)
 			{
-				int dx = cars[i].x - cars[j].x;
-				int dy = cars[i].y - cars[j].y;
-				if (dx*dx + dy*dy < 4 * R*R)
+				int dx = 0, dy = 0;
+				while (dx*dx + dy*dy < 4 * R*R)
 				{
-					cars[i].x += dx / 10;
-					cars[i].y += dy / 10;
-					cars[j].x -= dx / 10;
-					cars[j].y -= dy / 10;
+					car[i].x += dx / 10.0;
+					car[i].x += dy / 10.0;
+					car[j].x -= dx / 10.0;
+					car[j].y -= dy / 10.0;
+					dx = car[i].x - car[j].x;
+					dy = car[i].y - car[j].y;
+					if (!dx && !dy)
+						break;
 				}
 			}
 
 
-		if (cars[0].x > 320) offsetX = cars[0].x - 320;
-		if (cars[0].y > 240) offsetY = cars[0].y - 240;
-
-		/////draw/////
 		app.clear(Color::White);
+
+		if (car[0].x > 320)
+			offsetX = car[0].x - 320;
+		if (car[0].y > 240)
+			offsetY = car[0].y - 240;
+
 		sBackground.setPosition(-offsetX, -offsetY);
 		app.draw(sBackground);
 
-		Color colors[5] = {Color::Red, Color::Green, Color::Magenta, Color::Blue, Color::White};
+		Color colors[10] = {Color::Red, Color::Green, Color::Magenta, Color::Blue, Color::White};
 
 		for (int i = 0; i < N; i++)
 		{
-			sCar.setPosition(cars[i].x - offsetX, cars[i].y - offsetY);
-			sCar.setRotation(cars[i].angle * 180 / 3.141592);
+			sCar.setPosition(car[i].x - offsetX, car[i].y - offsetY);
+			sCar.setRotation(car[i].angle * 180 / 3.141593);
 			sCar.setColor(colors[i]);
 			app.draw(sCar);
 		}

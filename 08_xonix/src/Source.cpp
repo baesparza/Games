@@ -8,6 +8,47 @@ const unsigned int M = 20, N = 40;
 int grid[M][N];
 const unsigned int TS = 18; // tile size
 
+struct Enemy
+{
+	int x, y, dx, dy;
+	Enemy()
+	{
+		x = y = 300;
+		dx = 4 - rand() % 8;
+		dy = 4 - rand() % 8;
+	}
+	void move()
+	{
+		// move and colitions with walls
+		x += dx;
+		if (grid[y / TS][x / TS] == 1)
+		{
+			dx *= -1;
+			x += dx;
+		}
+		y += dy;
+		if (grid[y / TS][x / TS] == 1)
+		{
+			dy *= -1;
+			y += dy;
+		}
+	}
+};
+
+void drop(int y, int x)
+{
+	if (grid[y][x] == 0) 
+		grid[y][x] = -1;
+	if (grid[y - 1][x] == 0) 
+		drop(y - 1, x);
+	if (grid[y + 1][x] == 0) 
+		drop(y + 1, x);
+	if (grid[y][x - 1] == 0) 
+		drop(y, x - 1);
+	if (grid[y][x + 1] == 0) 
+		drop(y, x + 1);
+}
+
 
 int main()
 {
@@ -23,6 +64,11 @@ int main()
 
 	Sprite sTile(t1), sEnemy(t2), sGameOver(t3);
 	sGameOver.setPosition(100, 100);
+
+	sEnemy.setOrigin(20, 20);
+	int enemyCount = 4;
+	Enemy a[10];
+
 
 	bool gameover = false;
 	int x = 0, y = 0, dx = 0, dy = 0;
@@ -79,6 +125,27 @@ int main()
 			timer = 0;
 		}
 
+		for (int i = 0; i < enemyCount; i++)
+			a[i].move();
+
+		if (grid[y][x] == 1)
+		{
+			dx = dy = 0;
+			for (int i = 0; i < enemyCount; i++)
+				drop(a[i].y / TS, a[i].x / TS);
+
+			for (int i = 0; i < M; i++)
+				for (int j = 0; j < N; j++)
+					if (grid[i][j] == -1)
+						grid[i][j] = 0;
+					else
+						grid[i][j] = 1;
+
+			for (int i = 0; i < enemyCount; i++)
+				if (grid[a[i].y / TS][a[i].x / TS] == 2)
+					gameover = true;
+		}
+
 		////////draw////////////
 		window.clear(Color::Black);
 		// grig
@@ -97,8 +164,15 @@ int main()
 		sTile.setPosition(x * TS, y * TS);
 		window.draw(sTile);
 
+		// draw enemys
+		for (int i = 0; i < enemyCount; i++)
+		{
+			sEnemy.setPosition(a[i].x, a[i].y);
+			window.draw(sEnemy);
+		}
+
 		// last thing to be draw if lose
-		if (gameover) 
+		if (gameover)
 			window.draw(sGameOver);
 
 		window.display();

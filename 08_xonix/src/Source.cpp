@@ -16,12 +16,15 @@ int main()
 	RenderWindow window(VideoMode(N * TS, M * TS), "XONIX");
 
 	// load texture
-	Texture t1;
+	Texture t1, t2, t3;
 	t1.loadFromFile("./assets/images/tiles.png");
+	t2.loadFromFile("./assets/images/enemy.png");
+	t3.loadFromFile("./assets/images/gameover.png");
 
-	Sprite sTile(t1);
+	Sprite sTile(t1), sEnemy(t2), sGameOver(t3);
+	sGameOver.setPosition(100, 100);
 
-
+	bool gameover = false;
 	int x = 0, y = 0, dx = 0, dy = 0;
 	float timer = 0.f, delay = 0.07f;
 	Clock clock;
@@ -52,6 +55,10 @@ int main()
 		else if (Keyboard::isKeyPressed(Keyboard::Up)) { dx = 0; dy = -1; }
 		else if (Keyboard::isKeyPressed(Keyboard::Down)) { dx = 0; dy = 1; }
 
+		// end game
+		if (gameover) continue;
+
+		// move main tile
 		if (timer > delay)
 		{
 			x += dx;
@@ -62,6 +69,9 @@ int main()
 			if (x > N - 1) x = N - 1;
 			if (y < 0) y = 0;
 			if (y > M - 1) y = M - 1;
+
+			// verifi if player lose
+			if (grid[y][x] == 2) gameover = true;
 
 			// define this tile as used
 			if (grid[y][x] == 0) grid[y][x] = 2;
@@ -86,6 +96,10 @@ int main()
 		sTile.setTextureRect(IntRect(36, 0, TS, TS));
 		sTile.setPosition(x * TS, y * TS);
 		window.draw(sTile);
+
+		// last thing to be draw if lose
+		if (gameover) 
+			window.draw(sGameOver);
 
 		window.display();
 	}

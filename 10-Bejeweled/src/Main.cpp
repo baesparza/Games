@@ -11,10 +11,19 @@ struct Piece
 	int x, y, col, row, king, match;
 
 	Piece() : match(0)
-	{
-
-	}
+	{ }
 }grid[10][10];
+
+void swap(Piece p1, Piece p2)
+{
+	// swap were pieces shound be
+	std::swap(p1.col, p2.col);
+	std::swap(p1.row, p2.row);
+
+	// swap main pieces
+	grid[p1.row][p1.col] = p1;
+	grid[p2.row][p2.col] = p2;
+}
 
 int main()
 {
@@ -42,13 +51,63 @@ int main()
 			grid[i][j].y = i * TS;
 		}
 
+	int x0, y0, x, y;
+	int click = 0;
+	Vector2i pos;
+
 	while (app.isOpen())
 	{
 		Event e;
 		while (app.pollEvent(e))
+		{
 			if (e.type == Event::Closed)
 				app.close();
 
+			if (e.type == Event::MouseButtonPressed)
+				if (e.key.code == Mouse::Left)
+				{
+					click++;
+					pos = Mouse::getPosition(app) - offset;
+				}
+		}
+
+		////mouse click/////
+		if (click == 1)
+		{
+			// +1 because it star at index 1
+			x0 = pos.x / TS + 1;
+			y0 = pos.y / TS + 1;
+		}
+		else if (click == 2)
+		{
+			// +1 because it star at index 1
+			x = pos.x / TS + 1;
+			y = pos.y / TS + 1;
+			if (abs(x - x0) + abs(y - y0) == 1) // verify if both pieces are near each other
+			{
+				swap(grid[y0][x0], grid[y][x]);
+				click = 0;
+			}
+			else
+				click = 1;
+		}
+
+		// moving animation
+		for (int i = 1; i < 9; i++)
+			for (int j = 1; j < 9; j++)
+			{
+				Piece & p = grid[i][j];
+				int dx, dy;
+				for (int i = 0; i < 4; i++) // x4 speed
+				{
+					dx = p.x - p.col * TS;
+					dy = p.y - p.row * TS;
+					if (dx)
+						p.x -= dx / abs(dx);
+					if (dy)
+						p.y -= dy / abs(dy);
+				}
+			}
 
 		//////draw/////
 		app.clear();

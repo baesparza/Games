@@ -8,9 +8,9 @@ Vector2i offset(48, 24);
 
 struct Piece
 {
-	int x, y, col, row, king, match;
+	int x, y, col, row, king, match, alpha;
 
-	Piece() : match(0)
+	Piece() : match(0), alpha(255)
 	{ }
 }grid[10][10];
 
@@ -131,6 +131,17 @@ int main()
 					isMoving = true;
 			}
 
+		// deleting animation
+		if (!isMoving)
+			for (int i = 1; i < 9; i++)
+				for (int j = 1; j < 9; j++)
+					if (grid[i][j].match)
+						if (grid[i][j].alpha > 10)
+						{
+							grid[i][j].alpha -= 10;
+							isMoving = true;
+						}
+
 		// get score
 		int score = 0;
 		for (int i = 1; i < 9; i++)
@@ -138,9 +149,9 @@ int main()
 				score += grid[i][j].match;
 
 		// second swap if not valid
-		if (isSwap && !isMoving) // id swap is still active
+		if (isSwap && !isMoving) 
 		{
-			if (!score)
+			if (!score) // if there is no score
 				swap(grid[y0][x0], grid[y][x]);
 			isSwap = false;
 		}
@@ -161,10 +172,11 @@ int main()
 				for (int i = 8, n = 0; i > 0; i--)
 					if (grid[i][j].match)
 					{
+						// reset for a new peace
 						grid[i][j].king = rand() % 7;
 						grid[i][j].y = -TS * n++;
 						grid[i][j].match = 0;
-
+						grid[i][j].alpha = 255;
 					}
 		}
 
@@ -176,6 +188,7 @@ int main()
 			for (int j = 1; j < 9; j++)
 			{
 				sGem.setTextureRect(IntRect(grid[i][j].king * 49, 0, 49, 49));
+				sGem.setColor(Color(255, 255, 255, grid[i][j].alpha));
 				sGem.setPosition(grid[i][j].x, grid[i][j].y);
 				sGem.move(offset.x - TS, offset.y - TS);
 				app.draw(sGem);

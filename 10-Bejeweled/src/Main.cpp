@@ -51,9 +51,10 @@ int main()
 			grid[i][j].y = i * TS;
 		}
 
-	int x0, y0, x, y;
-	int click = 0;
-	Vector2i pos;
+	int x0, y0, x, y; // pieces that are going to move
+	int click = 0; // num of clicks
+	Vector2i pos; // for mouse
+	bool isSwap = false, isMoving = false; // for swap
 
 	while (app.isOpen())
 	{
@@ -66,7 +67,8 @@ int main()
 			if (e.type == Event::MouseButtonPressed)
 				if (e.key.code == Mouse::Left)
 				{
-					click++;
+					if (!isSwap && !isMoving) // move when swap othe pieces ended
+						click++;
 					pos = Mouse::getPosition(app) - offset;
 				}
 		}
@@ -86,13 +88,31 @@ int main()
 			if (abs(x - x0) + abs(y - y0) == 1) // verify if both pieces are near each other
 			{
 				swap(grid[y0][x0], grid[y][x]);
+				isSwap = true;
 				click = 0;
 			}
 			else
 				click = 1;
 		}
 
+		// verify matching
+		for (int i = 1; i < 9; i++)
+			for (int j = 1; j < 9; j++)
+			{
+				// horizontaly
+				if (grid[i][j].king == grid[i + 1][j].king)
+					if (grid[i][j].king == grid[i - 1][j].king)
+						for (int n = -1; n <= 1; n++)
+							grid[i + n][j].match++;
+				// verticaly
+				if (grid[i][j].king == grid[i][j + 1].king)
+					if (grid[i][j].king == grid[i][j - 1].king)
+						for (int n = -1; n <= 1; n++)
+							grid[i][j + n].match++;
+			}
+
 		// moving animation
+		isMoving = false;
 		for (int i = 1; i < 9; i++)
 			for (int j = 1; j < 9; j++)
 			{
@@ -107,7 +127,46 @@ int main()
 					if (dy)
 						p.y -= dy / abs(dy);
 				}
+				if (dx || dy)
+					isMoving = true;
 			}
+
+		// get score
+		int score = 0;
+		for (int i = 1; i < 9; i++)
+			for (int j = 1; j < 9; j++)
+				score += grid[i][j].match;
+
+		// second swap if not valid
+		if (isSwap && !isMoving) // id swap is still active
+		{
+			if (!score)
+				swap(grid[y0][x0], grid[y][x]);
+			isSwap = false;
+		}
+
+		// update grid
+		if (!isMoving)
+		{
+			for (int i = 8; i > 0; i--)
+				for (int j = 1; j < 9; j++)
+					if (grid[i][j].match)
+						for (int n = i; n > 0; n--)
+							if (!grid[n][j].match)
+							{
+								swap(grid[n][j], grid[i][j]);
+								break;
+							}
+			for (int j = 1; j < 9; j++)
+				for (int i = 8, n = 0; i > 0; i--)
+					if (grid[i][j].match)
+					{
+						grid[i][j].king = rand() % 7;
+						grid[i][j].y = -TS * n++;
+						grid[i][j].match = 0;
+
+					}
+		}
 
 		//////draw/////
 		app.clear();

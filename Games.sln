@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_NetWalk", "11_NetWalk\11
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "12_Mahjong_Solitarie", "12_Mahjong_Solitarie\12_Mahjong_Solitarie.vcxproj", "{41BE5A73-AC25-444C-87BF-BF80AF2229C5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "13_Tron", "13_Tron\13_Tron.vcxproj", "{E848F754-BD76-47CE-9A0B-BCB124DC9958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,6 +77,10 @@ Global
 		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Debug|x64.Build.0 = Debug|x64
 		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Release|x64.ActiveCfg = Release|x64
 		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Release|x64.Build.0 = Release|x64
+		{E848F754-BD76-47CE-9A0B-BCB124DC9958}.Debug|x64.ActiveCfg = Debug|x64
+		{E848F754-BD76-47CE-9A0B-BCB124DC9958}.Debug|x64.Build.0 = Debug|x64
+		{E848F754-BD76-47CE-9A0B-BCB124DC9958}.Release|x64.ActiveCfg = Release|x64
+		{E848F754-BD76-47CE-9A0B-BCB124DC9958}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

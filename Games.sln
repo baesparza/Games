@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10-Bejeweled", "10-Bejewele
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11_NetWalk", "11_NetWalk\11_NetWalk.vcxproj", "{83512EAE-953D-4016-9DDF-261607D037FC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "12_Mahjong_Solitarie", "12_Mahjong_Solitarie\12_Mahjong_Solitarie.vcxproj", "{41BE5A73-AC25-444C-87BF-BF80AF2229C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -69,6 +71,10 @@ Global
 		{83512EAE-953D-4016-9DDF-261607D037FC}.Debug|x64.Build.0 = Debug|x64
 		{83512EAE-953D-4016-9DDF-261607D037FC}.Release|x64.ActiveCfg = Release|x64
 		{83512EAE-953D-4016-9DDF-261607D037FC}.Release|x64.Build.0 = Release|x64
+		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Debug|x64.ActiveCfg = Debug|x64
+		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Debug|x64.Build.0 = Debug|x64
+		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Release|x64.ActiveCfg = Release|x64
+		{41BE5A73-AC25-444C-87BF-BF80AF2229C5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

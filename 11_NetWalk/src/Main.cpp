@@ -56,7 +56,7 @@ bool isOut(sf::Vector2i v)
 	return !sf::IntRect(0, 0, N, N).contains(v);
 }
 
-void generatePuzzel()
+void generatePuzze()
 {
 	std::vector<sf::Vector2i> nodes;
 	nodes.push_back(sf::Vector2i(rand() % N, rand() % N));
@@ -105,7 +105,7 @@ int main()
 	sf::Sprite sBackground(t1), sPipe(t2);
 	sPipe.setOrigin(TS / 2, TS / 2);
 
-	generatePuzzel();
+	generatePuzze();
 
 	for (int i = 0; i < N; i++)
 		for (int j = 0; j < N; j++)

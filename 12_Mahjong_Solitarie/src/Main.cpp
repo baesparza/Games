@@ -78,6 +78,8 @@ int main()
 			b = rand() % n;
 		}
 		f(opens[a]) = -k;
+		if (k > 34) 
+			k++;
 		f(opens[b]) = -k;
 		k %= 42;
 	}
@@ -113,7 +115,7 @@ int main()
 						continue;
 
 					int a = f(v1), b = f(v2);
-					if (a == b)
+					if (a == b || (a > 34 && a < 39 && b > 34 && b < 39) || a >= 39 && b <= 39)
 					{
 						f(v1) *= -1;
 						f(v2) *= -1;
@@ -135,7 +137,7 @@ int main()
 					int k = f(x, y, z) - 1;
 					if (k < 0)
 						continue;
-					sTile.setTextureRect(sf::IntRect(k * W, 0, W, H));
+					sTile.setTextureRect(isOpen(x, y, z) ? sf::IntRect(k * W, H, W, H) : sf::IntRect(k * W, 0, W, H));
 					sTile.setPosition(x * stepX + z * offX, y * stepY - z * offY);
 
 					app.draw(sTile);

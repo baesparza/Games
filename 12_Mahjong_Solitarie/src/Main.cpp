@@ -87,6 +87,7 @@ int main()
 			for (int x = 0; x < 30; x++)
 				f(x, y, z) *= -1;
 
+	sf::Vector3i v1, v2;
 
 	while (app.isOpen())
 	{
@@ -95,6 +96,32 @@ int main()
 		{
 			if (e.type == sf::Event::Closed)
 				app.close();
+
+			if (e.key.code == sf::Mouse::Left)
+				for (int z = 0; z < 10; z++)
+				{
+					sf::Vector2i pos = sf::Mouse::getPosition(app);
+					int x = (pos.x - z * offX) / stepX;
+					int y = (pos.y + z * offY) / stepY;
+
+					for (int i = 0; i < 2; i++)
+						for (int j = 0; j < 2; j++)
+							if (f(x - i, y - j, z) > 0 && isOpen(x - i, y - j, z))
+								v1 = sf::Vector3i(x - i, y - j, z);
+
+					if (v1 == v2)
+						continue;
+
+					int a = f(v1), b = f(v2);
+					if (a == b)
+					{
+						f(v1) *= -1;
+						f(v2) *= -1;
+					}
+					v2 = v1;
+
+				}
+
 		}
 
 		//////////draw//////////
@@ -105,8 +132,8 @@ int main()
 			for (int x = 30; x >= 0; x--)
 				for (int y = 0; y < 18; y++)
 				{
-					int k = f(x, y, z);
-					if (k == 0)
+					int k = f(x, y, z) - 1;
+					if (k < 0)
 						continue;
 					sTile.setTextureRect(sf::IntRect(k * W, 0, W, H));
 					sTile.setPosition(x * stepX + z * offX, y * stepY - z * offY);

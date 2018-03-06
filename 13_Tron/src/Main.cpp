@@ -57,6 +57,11 @@ int main()
 	t.clear();
 	t.draw(sBackground);
 
+	sf::Font font;
+	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	sf::Text text("You Win", font, 35);
+	text.setPosition(W / 2 - 80, 20);
+
 	bool game = true;
 
 	while (app.isOpen())
@@ -81,7 +86,12 @@ int main()
 			if (key::isKeyPressed(key::S)) if (p2.dir != 3) p2.dir = 0;
 		}
 		
-		if (!game) continue; // when lose, stop game
+		if (!game) // when lose, stop game
+		{
+			app.draw(text);
+			app.display();
+			continue;
+		}
 
 		for (int i = 0; i < speed; i++)
 		{
@@ -89,7 +99,10 @@ int main()
 			p2.tick();
 
 			if (field[p1.x][p1.y] == 1 || field[p2.x][p2.y] == 1)
+			{
 				game = false;
+				text.setFillColor((field[p1.x][p1.y] == 1) ? p2.color : p1.color); // the oposite that cashed
+			}
 
 			field[p1.x][p1.y] = field[p2.x][p2.y] = 1;
 

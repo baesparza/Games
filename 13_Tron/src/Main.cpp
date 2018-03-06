@@ -62,6 +62,14 @@ int main()
 	sf::Text text("You Win", font, 35);
 	text.setPosition(W / 2 - 80, 20);
 
+	sf::Shader * shader = new sf::Shader;
+	shader->loadFromFile("./assets/shader.frag", sf::Shader::Fragment);
+	shader->setParameter("frag_ScreenResolution", sf::Vector2f(W, H));
+	shader->setParameter("frag_LightAttenuation", 100);
+
+	sf::RenderStates states; 
+	states.shader = shader;
+
 	bool game = true;
 
 	while (app.isOpen())
@@ -106,15 +114,14 @@ int main()
 
 			field[p1.x][p1.y] = field[p2.x][p2.y] = 1;
 
-			sf::CircleShape c(3);
-			c.setPosition(p1.x, p1.y);
-			c.setFillColor(p1.color);
-			t.draw(c);
-			c.setPosition(p2.x, p2.y);
-			c.setFillColor(p2.color);
-			t.draw(c);
-
 			t.display();
+
+			shader->setParameter("frag_LightOrigin", sf::Vector2f(p1.x, p1.y));
+			shader->setParameter("frag_LightColor", p1.color);
+			t.draw(sprite, states);
+			shader->setParameter("frag_LightOrigin", sf::Vector2f(p2.x, p2.y));
+			shader->setParameter("frag_LightColor", p2.color);
+			t.draw(sprite, states);
 		}
 
 		/////////draw/////////

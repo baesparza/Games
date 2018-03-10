@@ -16,6 +16,9 @@
       </SubType>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Main.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{dba9f1a3-c959-46c7-b76d-643ad34e7594}</ProjectGuid>

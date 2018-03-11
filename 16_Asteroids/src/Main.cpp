@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include "Main.h"
+#include <iostream>
 
 const int W = 1200, H = 800;
 
@@ -8,6 +8,9 @@ const float DEGTORAD = 0.017453f;
 class Animation
 {
 public:
+	Animation()
+	{ }
+
 	Animation(sf::Texture &t, int x, int y, int w, int h, int count, float speed) :
 		m_speed(speed), m_frame(0.f)
 	{
@@ -27,25 +30,69 @@ public:
 		if (n > 0) m_sprite.setTextureRect(m_frames[int(m_frame)]);
 	}
 
-	void setPosition(int x, int y)
-	{
-		m_sprite.setPosition(x, y);
-	}
-
-	sf::Sprite& getSprite()
-	{
-		return m_sprite;
-	}
-
-private:
+public:
 	float m_frame, m_speed;
 	sf::Sprite m_sprite;
 	std::vector<sf::IntRect> m_frames;
 };
 
+class Entity
+{
+public:
+	Entity() : m_life(1)
+	{ }
+
+	void settings(Animation &a, int x, int y, float angle = 0, int radius = 1)
+	{
+		m_anim = a;
+		m_x = x;
+		m_y = y;
+		m_angle = angle;
+		m_radius = radius;
+	}
+
+	virtual void update() {};
+
+	void draw(sf::RenderWindow& app)
+	{
+		m_anim.m_sprite.setPosition(m_x, m_y);
+		m_anim.m_sprite.setRotation(m_angle + 90);
+		app.draw(m_anim.m_sprite);
+	}
+
+public:
+	float m_x, m_y, m_dx, m_dy, m_radius, m_angle;
+	bool m_life;
+	std::string m_name;
+	Animation m_anim;
+};
+
+class Asteroid : public Entity
+{
+public:
+	Asteroid()
+	{
+		m_dx = rand() % 8 - 4;
+		m_dy = rand() % 8 - 4;
+		m_name = "Asteroids";
+	}
+
+	void update()
+	{
+		m_x += m_dx;
+		m_y += m_dy;
+		if (m_x > W) m_x = 0;
+		if (m_x < 0) m_x = W;
+		if (m_y > H) m_y = 0;
+		if (m_y < 0) m_y = H;
+	}
+};
+
 
 int main()
 {
+	srand(time(0));
+
 	sf::RenderWindow app(sf::VideoMode(W, H), "Asteroids");
 	app.setFramerateLimit(60);
 
@@ -61,15 +108,19 @@ int main()
 
 	Animation sRock(t3, 0, 0, 64, 64, 16, 0.2);
 
-	sRock.setPosition(400, 400);
+	std::vector <Entity *> entities;
 
-	float frame = 0, animSpeed = 0.4, framecount = 20;
+	for (int i = 0; i < 15; i++)
+	{
+		entities.push_back(new Asteroid());
+		entities[i]->settings(sRock, rand() % W, rand() % H, rand() % 360, 25);
+	}
+
 
 	// ship
 	float x = W / 2, y = H / 2;
 	float dx = 0, dy = 0, angle = 0;
 	bool thrust;
-
 
 
 	while (app.isOpen())
@@ -79,10 +130,6 @@ int main()
 			if (e.type == sf::Event::Closed)
 				app.close();
 
-
-		//////sprite animation/////
-		frame += animSpeed;
-		if (frame > framecount) frame = -framecount;
 
 		/////keyboard/////
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) angle += 3;
@@ -121,13 +168,24 @@ int main()
 		sPlayer.setPosition(x, y);
 		sPlayer.setRotation(angle + 90); // to aling ship with dir
 
+		for (auto i = entities.begin(); i != entities.end();)
+		{
+			Entity *e = *i;
+			e->update();
+			e->m_anim.update();
+			if (!e->m_life)
+			{
+				i = entities.erase(i);
+				delete e;
+			}
+			else i++;
+		}
 
-		sRock.update();
+
 		/////draw/////
 		app.clear();
-
 		app.draw(sBackground);
-		app.draw(sRock.getSprite());
+		for (auto e : entities) e->draw(app);
 		app.draw(sPlayer);
 		app.display();
 	}
